@@ -1,0 +1,17 @@
+{
+ "ball.png": "2b4ffcbfdbb51c001922792083cb27f47498e223",
+ "ball_spin_1.png": "ca8b6bce573f08a4550c835189867331f8d8552b",
+ "ball_spin_2.png": "fab54335dcaf850e63d270e3c0ab8c103e341790",
+ "ball_spin_3.png": "668996d8c7b55a5e2bffe8722892be442350bd5f",
+ "ball_spin_4.png": "c6031105650ea4d99d952e0ebda5ce54f0bb28ed",
+ "court.png": "a7c7bba1d61c96d8e39e33c90f75db99fd2a1949",
+ "fx_hit_1.png": "46d65240a9c92527c5f9af9297b2438ccb94c35c",
+ "fx_hit_2.png": "350f4bb556b885ff7ef62ad2da5cec59fdb7a503",
+ "fx_hit_3.png": "f5c640efddcedcceb5f5c7eb6421837f5fba1705",
+ "fx_hit_4.png": "02e779729f5bf930b67431159a5a7a3e6733854e",
+ "fx_storm_1.png": "8d04ff20f9ff9fa5f7b6cffd9fc7558eb89aa919",
+ "fx_storm_2.png": "f1ea2290d9dbfca8087b1defeeafdefdc42b5401",
+ "fx_storm_3.png": "b6795ffef7bb7adaeeccc9c8b29043bb6cbe4e43",
+ "paddle_teal.png": "fcd52ec4c124e655c19e9e80c4c19f1d8141b71e",
+ "paddle_teal_hit.png": "6f825945763c0739a888001db585f3d79ac28114"
+}
