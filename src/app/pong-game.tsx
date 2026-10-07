@@ -3,7 +3,7 @@
 import { useCallback, useEffect, useRef, useState, type PointerEvent as ReactPointerEvent } from "react";
 import { io, type Socket } from "socket.io-client";
 import { createSpriteBank, drawFx, spawnFx, type Fx } from "../game/sprite-bank";
-import { applyView, pointerToBoard, screenSize, uprightOverlay, uprightText, usePortrait, type BoardView } from "../game/board-view";
+import { applyView, pointerToBoard, screenSize, themeFont, uprightOverlay, uprightText, usePortrait, type BoardView } from "../game/board-view";
 
 type Point = { x: number; y: number };
 type Side = "left" | "right";
@@ -371,7 +371,7 @@ export function PongGame({ sprites: files }: { sprites: string[] }) {
       ball.recoil.left *= decay; ball.recoil.right *= decay;
       drawSprite(paddle("paddle_teal", "left"), 24 - ball.recoil.left * 7, s.left, PADDLE_W, PADDLE_H);
       drawSprite(paddle("paddle_brick", "right"), W - 76 + ball.recoil.right * 7, s.right, PADDLE_W, PADDLE_H);
-      if (you) uprightText(ctx, v, dpr, "YOU", you === "left" ? 50 : W - 50, Math.max(20, (you === "left" ? s.left : s.right) - 16), "700 15px Rubik, sans-serif", "#f2e8ca");
+      if (you) uprightText(ctx, v, dpr, "YOU", you === "left" ? 50 : W - 50, Math.max(20, (you === "left" ? s.left : s.right) - 16), `600 15px ${themeFont("mono")}`, "#f2e8ca");
       drawBall(s, sp?.ball, dt);
       drawFx(ctx, art, fx, now);
       if (overlay) uprightOverlay(ctx, v, dpr, [overlay]);
