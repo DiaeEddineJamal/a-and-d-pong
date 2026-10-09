@@ -2,6 +2,11 @@
 
 import { useCallback, useEffect, useRef, useState, type PointerEvent as ReactPointerEvent } from "react";
 import { io, type Socket } from "socket.io-client";
+
+const SERVER = process.env.NEXT_PUBLIC_RACING_SERVER_URL ?? "http://localhost:3000";
+// The free host puts the server to sleep when idle: wake it as soon as the game opens, not when Online is pressed.
+if (typeof window !== "undefined") fetch(`${SERVER}/socket.io/?EIO=4&transport=polling`, { mode: "no-cors" }).catch(() => {});
+const WAKING = "Waking up the arcade server… it naps when nobody is playing. This can take up to a minute.";
 import { createSpriteBank, drawFx, spawnFx, type Fx } from "../game/sprite-bank";
 import { applyView, pointerToBoard, screenSize, themeFont, uprightOverlay, uprightText, usePortrait, type BoardView } from "../game/board-view";
 
@@ -154,7 +159,7 @@ export function PongGame({ sprites: files }: { sprites: string[] }) {
     if (socket.current) return socket.current;
     // WebSocket first; long-polling only if a network blocks sockets, since
     // it adds a round trip per packet.
-    const client = io(process.env.NEXT_PUBLIC_RACING_SERVER_URL ?? "http://localhost:3000", { transports: ["websocket", "polling"], reconnectionDelay: 400, reconnectionDelayMax: 2500 });
+    const client = io(SERVER, { transports: ["websocket", "polling"], reconnectionDelay: 400, reconnectionDelayMax: 2500 });
     socket.current = client;
 
     const ping = () => {
@@ -174,6 +179,7 @@ export function PongGame({ sprites: files }: { sprites: string[] }) {
     let pinger = 0;
     client.on("connect", () => {
       window.clearInterval(pinger);
+      setLobby((l) => l.notice === WAKING ? { ...l, notice: "Connected. Create a private room or enter a friend’s code." } : l);
       ping(); window.setTimeout(ping, 250); window.setTimeout(ping, 600);
       pinger = window.setInterval(ping, 2000);
       if (!roomCode.current) return;
@@ -196,7 +202,8 @@ export function PongGame({ sprites: files }: { sprites: string[] }) {
     });
     client.on("connect_error", () => {
       if (roomCode.current) return;
-      setLobby((l) => ({ ...l, notice: "Can’t reach the arcade server. Please try again in a moment." }));
+      // socket.io keeps retrying; a sleeping server usually answers within a minute
+      setLobby((l) => ({ ...l, notice: WAKING }));
     });
     client.on("pong:room", (room: RoomInfo) => applyRoom(room));
     client.on("pong:hostChanged", () => {
