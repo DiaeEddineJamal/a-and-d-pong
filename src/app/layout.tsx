@@ -8,7 +8,7 @@ const plex = IBM_Plex_Mono({ subsets: ["latin"], weight: ["400", "500", "600"], 
 const term = VT323({ subsets: ["latin"], weight: "400", variable: "--font-term", display: "swap" });
 
 export const metadata: Metadata = {
-  title: "Mangolian Pong",
+  title: "A&D Pong",
   description: "A local and online retro Pong game.",
 };
 
